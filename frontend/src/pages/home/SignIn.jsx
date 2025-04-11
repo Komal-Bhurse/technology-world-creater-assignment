@@ -36,16 +36,21 @@ export default function SignIn({ setToogle }) {
 			try {
 				setLoading(true);
 				const resp = await APICALL("post", "/api/auth/login", values)
-				console.log(resp)
-				const res = resp?.data;
-
+				
+				let res ;
+				if(resp?.status === 404){
+					res = resp?.response.data;
+				}else{
+				 res = resp?.data;
+				}
 				if (res?.message === "success") {
 					toast.success("Sign In successfull")
 					resetForm()
 					setLoading(false)
 					dispatch(login(res?.data))
 					navigate("/scp/dashboard")
-				} else if (res?.message === "faild") {
+				} 
+				if (res?.message === "faild") {
 					toast.error(res?.error)
 					setLoading(false)
 				} else {
