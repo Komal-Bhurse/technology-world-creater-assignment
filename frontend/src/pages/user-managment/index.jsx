@@ -165,7 +165,7 @@ export default function index() {
 		<>
 			<div className="d-flex align-items-center justify-content-between">
 				<p></p>
-				<h2 className="text-center fs-5">User Management</h2>
+				<h2 className="text-center fs-5">Farmer Management</h2>
 				<button
 					onClick={() => {
                         setIsEdit(false)
@@ -229,7 +229,7 @@ export default function index() {
 					) : (
 						<tr className="text-center">
 							<td colSpan={5} className="border-0 py-4">
-								No Users Found!
+								No Farmers Found!
 							</td>
 						</tr>
 					)}
@@ -241,7 +241,7 @@ export default function index() {
 					<div className="modal-content">
 						<div className="modal-header">
 							<h5 className="modal-title" id="editModalLabel">
-								{isEdit ? "Edit User" : "Add User"}
+								{isEdit ? "Edit Farmer" : "Add Farmer"}
 							</h5>
 							<button ref={closeRef} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
 						</div>
