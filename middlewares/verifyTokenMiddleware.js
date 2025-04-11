@@ -1,7 +1,7 @@
 import  { validateToken }  from "../services/auth.js";
 
 const  veryfyToken = async(req, res, next) =>{
-  const userUid = req.cookies?.uuid;
+  const userUid = req.cookies?.twc_uid;
   if (!userUid) {
     return res.json({
       massage: "Access Denied ! ",
