@@ -13,6 +13,9 @@ export default function index() {
 						<div className="text-center">
 							<img src="/assets/logo.png" alt="logo" className="logo w-25 h-25" />
 						</div>
+						<div>
+							<h2 className="fs-5 text-center mt-2 fw-bold text-success">SCP {toogle?"Login":"Registration"} </h2>
+						</div>
 						{
 							toogle ?
 								<SignIn toogle={toogle} setToogle={setToogle} />
