@@ -61,7 +61,7 @@ const Login = async (req, res) => {
         console.log(isPasswordMatch)
       
         if (!isPasswordMatch) {
-          return res.status(401).json({ message: 'faild', data: '', error: 'Invalid password' });
+          return res.status(400).json({ message: 'faild', data: '', error: 'Invalid password' });
         }
 
         const token = generateToken(user);
