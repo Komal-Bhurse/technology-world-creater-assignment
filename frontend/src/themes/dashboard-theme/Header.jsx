@@ -18,7 +18,7 @@ export default function Header() {
 			console.log(response);
 			const res = response?.data;
            
-			if (res?.massage === "success") {
+			if (res?.message === "success") {
 				persistor.purge();
 				dispatch(logout(null));
 

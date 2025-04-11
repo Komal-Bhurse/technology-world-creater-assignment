@@ -39,17 +39,17 @@ export default function SignIn({ setToogle }) {
 				console.log(resp)
 				const res = resp?.data;
 
-				if (res?.massage === "success") {
+				if (res?.message === "success") {
 					toast.success("Sign In successfull")
 					resetForm()
 					setLoading(false)
 					dispatch(login(res?.data))
 					navigate("/scp/dashboard")
-				} else if (res?.massage === "faild") {
+				} else if (res?.message === "faild") {
 					toast.error(res?.error)
 					setLoading(false)
 				} else {
-					toast.error("Something went wrong")
+					toast.error(res?.error)
 					setLoading(false)
 				}
 			} catch (error) {

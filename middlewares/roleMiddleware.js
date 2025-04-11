@@ -3,7 +3,7 @@ const authorizedRole = (...roles) => {
     return (req, res, next) => {
         // console.log(req.user.userType)
         if (!roles.includes(req.user.userType)) {
-            return res.status(403).json({ massage: 'faild', data: req.user, error: "Access Denied!" })
+            return res.status(403).json({ message: 'faild', data: req.user, error: "Access Denied!" })
         }
         // console.log(req.user.userType)
         next();

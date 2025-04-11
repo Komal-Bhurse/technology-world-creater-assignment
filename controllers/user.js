@@ -6,10 +6,10 @@ const getAllUsers = async (req, res) => {
 
         const response = await User.find({ addedBy })
 
-        res.status(200).json({ massage: 'success', data: response, error: '' })
+        res.status(200).json({ message: 'success', data: response, error: '' })
 
     } catch (error) {
-        res.status(505).json({ massage: 'faild', data: '', error: error.toString() })
+        res.status(505).json({ message: 'faild', data: '', error: error.toString() })
     }
 }
 
@@ -19,12 +19,12 @@ const getOneUser = async (req, res) => {
 
         const response1 = await User.findById(_id)
 
-        if (!response1) return res.status(404).json({ massage: 'faild', data: response1, error: "User Not Found!" })
+        if (!response1) return res.status(404).json({ message: 'faild', data: response1, error: "User Not Found!" })
 
-        res.status(200).json({ massage: 'success', data: response1, error: '' })
+        res.status(200).json({ message: 'success', data: response1, error: '' })
 
     } catch (error) {
-        res.status(505).json({ massage: 'faild', data: '', error: error.toString() })
+        res.status(505).json({ message: 'faild', data: '', error: error.toString() })
     }
 }
 
@@ -34,11 +34,11 @@ const addOneUser = async (req, res) => {
 
         const response = await User.create({ ...data, userType: "Farmer" })
 
-        res.status(202).json({ massage: 'success', data: response, error: '' })
+        res.status(202).json({ message: 'success', data: response, error: '' })
 
     } catch (error) {
        
-        res.status(505).json({ massage: 'faild', data: '', error: error?.toString() })
+        res.status(505).json({ message: 'faild', data: '', error: error?.toString() })
     }
 }
 
@@ -50,7 +50,7 @@ const updateOneUser = async (req, res) => {
 
         const response1 = await User.findById(_id)
 
-        if (!response1) return res.status(404).json({ massage: 'faild', data: response1, error: "User Not Found!" })
+        if (!response1) return res.status(404).json({ message: 'faild', data: response1, error: "User Not Found!" })
 
         if (response1?.userType !== "SuperAdmin") {
 
@@ -65,15 +65,15 @@ const updateOneUser = async (req, res) => {
                 }
             }
 
-            if (unOuthFields) return res.status(404).json({ massage: 'faild', data: '', error: `You are unauthorised!, Please request Admin to update ${unOuthFields}` })
+            if (unOuthFields) return res.status(404).json({ message: 'faild', data: '', error: `You are unauthorised!, Please request Admin to update ${unOuthFields}` })
         }
 
         const response2 = await User.findByIdAndUpdate(_id, { ...data }, { new: true })
 
-        res.status(202).json({ massage: 'success', data: response2, error: '' })
+        res.status(202).json({ message: 'success', data: response2, error: '' })
 
     } catch (error) {
-        res.status(505).json({ massage: 'faild', data: '', error: error.toString() })
+        res.status(505).json({ message: 'faild', data: '', error: error.toString() })
     }
 }
 
@@ -83,20 +83,20 @@ const deleteOneUser = async (req, res) => {
 
         const response1 = await User.findById(_id)
 
-        if (!response1) return res.status(404).json({ massage: 'faild', data: response1, error: "User Not Found!" })
+        if (!response1) return res.status(404).json({ message: 'faild', data: response1, error: "User Not Found!" })
 
         // if (response1?.userType !== "SuperAdmin") {
 
-        //     return res.status(404).json({ massage: 'faild', data: '', error: `You are unauthorised!, Please request Admin to delete user:${_id}` })
+        //     return res.status(404).json({ message: 'faild', data: '', error: `You are unauthorised!, Please request Admin to delete user:${_id}` })
 
         // }
 
         const response2 = await User.deleteOne({ _id })
 
-        res.status(202).json({ massage: 'success', data: response2, error: '' })
+        res.status(202).json({ message: 'success', data: response2, error: '' })
 
     } catch (error) {
-        res.status(505).json({ massage: 'faild', data: '', error: error.toString() })
+        res.status(505).json({ message: 'faild', data: '', error: error.toString() })
     }
 }
 

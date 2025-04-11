@@ -35,7 +35,7 @@ export default function index() {
 			const response = await axios.get(`/api/user/getall`, { withCredentials: true });
 			const res = response?.data;
 			console.log(res);
-			if (res?.massage === "success") {
+			if (res?.message === "success") {
 				setUsers([...res.data]);
 				setLoading(false);
 			} else {
@@ -60,7 +60,7 @@ export default function index() {
 		try {
 			const response = await axios.delete(`/api/user/${id}`, { withCredentials: true });
 			const res = response?.data;
-			if (res?.massage === "success") {
+			if (res?.message === "success") {
 				setToogle((prev) => !prev);
 				toast.success("User Deleted");
 				setDeleteLoading(false);
@@ -85,7 +85,7 @@ export default function index() {
 
 				const res = response?.data;
         
-				if (res?.massage === "success") {
+				if (res?.message === "success") {
 					toast.success("User Updated");
 					setToogle((prev) => !prev);
 					handleClose();
@@ -102,7 +102,7 @@ export default function index() {
         
 				const res = response?.data;
 
-				if (res?.massage === "success") {
+				if (res?.message === "success") {
 					toast.success("User Added");
 					resetForm();
 					setToogle((prev) => !prev);

@@ -28,7 +28,7 @@ const Register = async (req, res) => {
             domain: "twc-eight.vercel.app",
         });
 
-        res.status(201).json({ massage: 'success', data: response, error: '' })
+        res.status(201).json({ message: 'success', data: response, error: '' })
        
     } catch (error) {
         res.status(500).json({ message: 'Failed to create user' });
@@ -51,7 +51,7 @@ const Login = async (req, res) => {
         const user = await User.findOne({ email });
 
         if(!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'faild', data: '', error: 'Invalid email' });
         }
 
         console.log(user)
@@ -61,7 +61,7 @@ const Login = async (req, res) => {
         console.log(isPasswordMatch)
       
         if (!isPasswordMatch) {
-          return res.status(401).json({ message: 'Invalid  password' });
+          return res.status(401).json({ message: 'faild', data: '', error: 'Invalid password' });
         }
 
         const token = generateToken(user);
@@ -72,11 +72,11 @@ const Login = async (req, res) => {
         });
         
 
-        res.status(200).json({ massage: 'success', data: user, error: '' })
+        res.status(200).json({ message: 'success', data: user, error: '' })
 
     } catch (error) {
 
-        return res.status(505).json({ massage: 'faild', data: '', error: error?.toString() })
+        return res.status(505).json({ message: 'faild', data: '', error: error?.toString() })
 
     }
 
@@ -86,10 +86,10 @@ const Logout = (req, res) => {
     try {
         res.clearCookie("twc_uid");
 
-        return res.status(202).json({ massage: 'success', data: '', error: '' })
+        return res.status(202).json({ message: 'success', data: '', error: '' })
 
     } catch (error) {
-        return res.status(505).json({ massage: 'faild', data: '', error: error.toString() })
+        return res.status(505).json({ message: 'faild', data: '', error: error.toString() })
     }
 
 };

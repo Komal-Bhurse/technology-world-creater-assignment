@@ -47,7 +47,7 @@ export default function SignUp({ setToogle }) {
 				const response = await APICALL("post", "/api/auth/register", values)
 				const res = response?.data;
 				console.log(res)
-				if (res?.massage === "success") {
+				if (res?.message === "success") {
 					toast.success("Register successfull")
 					resetForm()
 					setLoading(false)
