@@ -36,7 +36,7 @@ export default function SignIn({ setToogle }) {
 			try {
 				setLoading(true);
 				const resp = await APICALL("post", "/api/auth/login", values)
-				
+				console.log(resp)
 				let res ;
 				if(resp?.status === 404){
 					res = resp?.response.data;
