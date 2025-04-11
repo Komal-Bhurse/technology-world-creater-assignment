@@ -32,7 +32,7 @@ const addOneUser = async (req, res) => {
     try {
         const data = req.body;
 
-        const response = await User.create({ ...data })
+        const response = await User.create({ ...data, userType: "Farmer" })
 
         res.status(202).json({ massage: 'success', data: response, error: '' })
 
