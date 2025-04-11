@@ -61,7 +61,7 @@ const Login = async (req, res) => {
         console.log(isPasswordMatch)
       
         if (!isPasswordMatch) {
-          return res.status(400).json({ message: 'faild', data: '', error: 'Invalid password' });
+          return res.status(404).json({ message: 'faild', data: '', error: 'Invalid password' });
         }
 
         const token = generateToken(user);
@@ -76,7 +76,7 @@ const Login = async (req, res) => {
 
     } catch (error) {
 
-        return res.status(505).json({ message: 'faild', data: '', error: error?.toString() })
+        return res.status(500).json({ message: 'faild', data: '', error: error?.toString() })
 
     }
 
@@ -86,10 +86,10 @@ const Logout = (req, res) => {
     try {
         res.clearCookie("twc_uid");
 
-        return res.status(202).json({ message: 'success', data: '', error: '' })
+        return res.status(200).json({ message: 'success', data: '', error: '' })
 
     } catch (error) {
-        return res.status(505).json({ message: 'faild', data: '', error: error.toString() })
+        return res.status(500).json({ message: 'faild', data: '', error: error.toString() })
     }
 
 };

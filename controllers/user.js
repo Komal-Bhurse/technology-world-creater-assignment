@@ -9,7 +9,7 @@ const getAllUsers = async (req, res) => {
         res.status(200).json({ message: 'success', data: response, error: '' })
 
     } catch (error) {
-        res.status(505).json({ message: 'faild', data: '', error: error.toString() })
+        res.status(500).json({ message: 'faild', data: '', error: error.toString() })
     }
 }
 
@@ -24,7 +24,7 @@ const getOneUser = async (req, res) => {
         res.status(200).json({ message: 'success', data: response1, error: '' })
 
     } catch (error) {
-        res.status(505).json({ message: 'faild', data: '', error: error.toString() })
+        res.status(500).json({ message: 'faild', data: '', error: error.toString() })
     }
 }
 
@@ -34,11 +34,11 @@ const addOneUser = async (req, res) => {
 
         const response = await User.create({ ...data, userType: "Farmer" })
 
-        res.status(202).json({ message: 'success', data: response, error: '' })
+        res.status(201).json({ message: 'success', data: response, error: '' })
 
     } catch (error) {
        
-        res.status(505).json({ message: 'faild', data: '', error: error?.toString() })
+        res.status(500).json({ message: 'faild', data: '', error: error?.toString() })
     }
 }
 
@@ -70,10 +70,10 @@ const updateOneUser = async (req, res) => {
 
         const response2 = await User.findByIdAndUpdate(_id, { ...data }, { new: true })
 
-        res.status(202).json({ message: 'success', data: response2, error: '' })
+        res.status(200).json({ message: 'success', data: response2, error: '' })
 
     } catch (error) {
-        res.status(505).json({ message: 'faild', data: '', error: error.toString() })
+        res.status(500).json({ message: 'faild', data: '', error: error.toString() })
     }
 }
 
@@ -93,10 +93,10 @@ const deleteOneUser = async (req, res) => {
 
         const response2 = await User.deleteOne({ _id })
 
-        res.status(202).json({ message: 'success', data: response2, error: '' })
+        res.status(200).json({ message: 'success', data: response2, error: '' })
 
     } catch (error) {
-        res.status(505).json({ message: 'faild', data: '', error: error.toString() })
+        res.status(500).json({ message: 'faild', data: '', error: error.toString() })
     }
 }
 
