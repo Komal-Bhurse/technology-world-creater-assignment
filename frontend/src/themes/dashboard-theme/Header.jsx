@@ -14,9 +14,10 @@ export default function Header() {
 	const Logout = async () => {
 		const loading = toast.loading("Logging Out!");
 		try {
-			const response = await axios.post(`/api/user/logout`, { withCredentials: true });
+			const response = await axios.post(`/api/auth/logout`, { withCredentials: true });
+			console.log(response);
 			const res = response?.data;
-            console.log(res)
+           
 			if (res?.massage === "success") {
 				persistor.purge();
 				dispatch(logout(null));

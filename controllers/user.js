@@ -2,7 +2,7 @@ import User from '../models/user.js'
 
 const getAllUsers = async (req, res) => {
     try {
-        const addedBy = req.params.id;
+        const addedBy = req.user._id;
 
         const response = await User.find({ addedBy })
 

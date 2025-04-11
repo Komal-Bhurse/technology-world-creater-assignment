@@ -11,12 +11,20 @@ const userSchema = new mongoose.Schema({
    },
    email: {
       type: String,
-      required: true,
+      required: false,
       unique: true
    },
    password: {
       type: String,
-      required: true,
+      required: false,
+   },
+   village: {
+      type: String,
+      required: false,
+   },
+   cropType: {
+      type: String,
+      required: false,
    },
    userType: {
       type: String,
@@ -40,7 +48,6 @@ const userSchema = new mongoose.Schema({
    toJSON: {
       transform(doc, ret) {
          delete ret.password;
-         delete ret.salt;
       },
    },
 })

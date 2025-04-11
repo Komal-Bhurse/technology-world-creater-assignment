@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://twc-eight.vercel.app/",
+        target: "http://localhost:5000",
         secure: true,
         changeOrigin: true,
       },

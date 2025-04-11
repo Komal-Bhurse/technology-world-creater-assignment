@@ -7,52 +7,17 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 const UserSignUpSchema = Yup.object().shape({
-	name: Yup.string().required("Please enter first name"),
-	phone: Yup.string().required("Please enter last name"),
-	village: Yup.string()
-		.matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid village")
-		.required("Please enter village"),
-    // cropType: Yup.string()
-    // .when('isEdit', {
-    //   is: false, // This means it's the add form
-    //   then: Yup.string()
-    //     .min(8, "Password must be at least 8 characters")
-    //     .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-    //     .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-    //     .matches(/[0-9]/, "Password must contain at least one number")
-    //     .matches(/[@$!%*?&]/, "Password must contain at least one special character")
-    //     .required("Please enter cropType"),
-    //   otherwise: Yup.string().notRequired(), // If it's the edit form, cropType is optional
-    // }),
+	name: Yup.string().required("Please enter  name"),
+	phone: Yup.string().required("Please enter phone"),
+	village: Yup.string().required("Please enter village"),
+	cropType: Yup.string().required("Please enter crop type"),
 });
-
-
-const getValidationSchema = (isEdit) => {
-  return Yup.object().shape({
-    name: Yup.string().required("Please enter first name"),
-    phone: Yup.string().required("Please enter last name"),
-    village: Yup.string()
-      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid village")
-      .required("Please enter village"),
-    
-    // Password validation is only applied if it's an "add" form
-    cropType: isEdit
-      ? Yup.string().notRequired() // If it's an edit form, cropType is optional
-      : Yup.string()
-          .min(8, "Password must be at least 8 characters")
-          .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-          .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-          .matches(/[0-9]/, "Password must contain at least one number")
-          .matches(/[@$!%*?&]/, "Password must contain at least one special character")
-          .required("Please enter cropType"),
-  });
-};
 
 export default function index() {
   const {user} = useSelector(state=>state.user)
 	const [toogle, setToogle] = useState(false);
 	const [action, setAction] = useState("");
-  const [isEdit,setIsEdit] = useState(false)
+    const [isEdit,setIsEdit] = useState(false)
 	const [users, setUsers] = useState([]);
 	const [editUser, setEditUser] = useState({});
 	const [loading, setLoading] = useState(false);
@@ -62,12 +27,12 @@ export default function index() {
 	const [error, setError] = useState(null);
 	const closeRef = useRef(null);
 
-	console.log(users);
+	console.log("user",user);
 
 	const getAllUsers = async () => {
 		setLoading(true);
 		try {
-			const response = await axios.get(`/api/user/getall/${user?._id}`, { withCredentials: true });
+			const response = await axios.get(`/api/user/getall`, { withCredentials: true });
 			const res = response?.data;
 			console.log(res);
 			if (res?.massage === "success") {
@@ -183,10 +148,10 @@ export default function index() {
 			name: editUser.name || "",
 			phone: editUser.phone || "",
 			village: editUser.village || "",
-      cropType: editUser.cropType || "",
-      isEdit
+            cropType: editUser.cropType || "",
+     
 		},
-		validationSchema: ()=>getValidationSchema(isEdit),
+		validationSchema: UserSignUpSchema,
 		onSubmit: (values, { resetForm }) => {
 			handleFormSubmit(values, resetForm);
 		},
@@ -203,7 +168,7 @@ export default function index() {
 				<h2 className="text-center fs-5">User Management</h2>
 				<button
 					onClick={() => {
-            setIsEdit(false)
+                        setIsEdit(false)
 						setAction("");
 						setEditUser({});
 					}}
@@ -276,7 +241,7 @@ export default function index() {
 					<div className="modal-content">
 						<div className="modal-header">
 							<h5 className="modal-title" id="editModalLabel">
-								Edit User
+								{isEdit ? "Edit User" : "Add User"}
 							</h5>
 							<button ref={closeRef} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
 						</div>
@@ -286,27 +251,27 @@ export default function index() {
 								{/* First Name Field */}
 								<div className="form-floating mb-0 col-md-6">
 									<input type="text" className="form-control shadow-none border-0 border-bottom" id="name" placeholder="First Name" name="name" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.name} />
-									<label htmlFor="name">First Name</label>
+									<label htmlFor="name">Name</label>
 									{Form.touched.name && Form.errors.name ? <p className="text-danger">{Form.errors.name}</p> : null}
 								</div>
 								{/* Last Name Field */}
 								<div className="form-floating mb-0 col-md-6">
 									<input type="text" className="form-control shadow-none border-0 border-bottom" id="phone" placeholder="Last Name" name="phone" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.phone} />
-									<label htmlFor="phone">Last Name</label>
+									<label htmlFor="phone">Phone</label>
 									{Form.touched.phone && Form.errors.phone ? <p className="text-danger">{Form.errors.phone}</p> : null}
 								</div>
 								{/* Email Field */}
 								<div className="form-floating  mb-0">
-									<input type="village" className="form-control shadow-none border-0 border-bottom" id="village" placeholder="Email" name="village" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.village} />
-									<label htmlFor="village">Email</label>
+									<input type="text" className="form-control shadow-none border-0 border-bottom" id="village" placeholder="Email" name="village" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.village} />
+									<label htmlFor="village">Village</label>
 									{Form.touched.village && Form.errors.village ? <p className="text-danger">{Form.errors.village}</p> : null}
 								</div>
 
 								{/* Password Field */}
 								{action !== "edit" ? (
 									<div className="form-floating mb-3">
-										<input type="cropType" className="form-control shadow-none border-0 border-bottom" id="cropType" placeholder="Password" name="cropType" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.cropType} />
-										<label htmlFor="cropType">Password</label>
+										<input type="text" className="form-control shadow-none border-0 border-bottom" id="cropType" placeholder="Password" name="cropType" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.cropType} />
+										<label htmlFor="cropType">Crop Type</label>
 										{Form.touched.cropType && Form.errors.cropType ? <p className="text-danger">{Form.errors.cropType}</p> : null}
 									</div>
 								) : null}

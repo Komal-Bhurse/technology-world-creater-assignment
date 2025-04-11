@@ -36,6 +36,7 @@ export default function SignIn({ setToogle }) {
 			try {
 				setLoading(true);
 				const resp = await APICALL("post", "/api/auth/login", values)
+				console.log(resp)
 				const res = resp?.data;
 
 				if (res?.massage === "success") {

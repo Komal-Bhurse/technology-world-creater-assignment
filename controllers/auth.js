@@ -1,6 +1,6 @@
 import User from '../models/user.js'
-import { generateToken } from '../services/user.js'
-import bcrypt from 'bcrypt'
+import { generateToken } from '../services/auth.js'
+import bcrypt from 'bcryptjs'
 
 const Register = async (req, res) => {
 
@@ -48,10 +48,20 @@ const Login = async (req, res) => {
             return res.status(400).json({ message: 'Please fill the password' });
         }
 
-        const user = User.findOne({ email });
+        const user = await User.findOne({ email });
+
+        if(!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        console.log(user)
+
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+        console.log(isPasswordMatch)
       
-        if (!user || !(await bcrypt.compare(password, user.password))) {
-          return res.status(401).json({ message: 'Invalid email or password' });
+        if (!isPasswordMatch) {
+          return res.status(401).json({ message: 'Invalid  password' });
         }
 
         const token = generateToken(user);
@@ -60,6 +70,7 @@ const Login = async (req, res) => {
             secure: true,
             domain: "twc-eight.vercel.app",
         });
+        
 
         res.status(200).json({ massage: 'success', data: user, error: '' })
 

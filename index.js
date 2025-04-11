@@ -2,6 +2,8 @@ import express from "express";
 import helmet from 'helmet'
 import path  from "path"
 import cookieParser from 'cookie-parser'
+import  veryfyToken  from "./middlewares/verifyTokenMiddleware.js"
+import  authorizedRole  from "./middlewares/roleMiddleware.js"
 
 import userRoutes from "./routes/user.js"
 import authRoutes from "./routes/auth.js"
@@ -29,9 +31,9 @@ app.get("/",(req,res)=>{
     res.sendFile(path.resolve("./",'frontend','dist','index.html'))
 })
 
-app.get("/scp/dashboard",(req,res)=>{
-    app.use(express.static(path.resolve("./",'frontend','dist')))
-    res.sendFile(path.resolve("./",'frontend','dist','index.html'))
+app.get("/scp/dashboard",veryfyToken,authorizedRole("SCP"),(req,res)=>{
+        app.use(express.static(path.resolve("./",'frontend','dist')))
+        res.sendFile(path.resolve("./",'frontend','dist','index.html'))
 })
 
 app.listen(PORT,()=>{
