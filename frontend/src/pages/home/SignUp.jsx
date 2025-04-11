@@ -16,8 +16,8 @@ const initialSignUpValues = {
 };
 
 const UserSignUpSchema = Yup.object().shape({
-	name: Yup.string().required("Please enter first name"),
-	phone: Yup.string().required("Please enter last name"),
+	name: Yup.string().required("Please enter name"),
+	phone: Yup.string().required("Please enter phone"),
 	email: Yup.string().matches(
 		/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
 		'Invalid email'
