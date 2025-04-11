@@ -7,12 +7,12 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 const UserSignUpSchema = Yup.object().shape({
-	firstName: Yup.string().required("Please enter first name"),
-	lastName: Yup.string().required("Please enter last name"),
-	email: Yup.string()
-		.matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email")
-		.required("Please enter email"),
-    // password: Yup.string()
+	name: Yup.string().required("Please enter first name"),
+	phone: Yup.string().required("Please enter last name"),
+	village: Yup.string()
+		.matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid village")
+		.required("Please enter village"),
+    // cropType: Yup.string()
     // .when('isEdit', {
     //   is: false, // This means it's the add form
     //   then: Yup.string()
@@ -21,30 +21,30 @@ const UserSignUpSchema = Yup.object().shape({
     //     .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
     //     .matches(/[0-9]/, "Password must contain at least one number")
     //     .matches(/[@$!%*?&]/, "Password must contain at least one special character")
-    //     .required("Please enter password"),
-    //   otherwise: Yup.string().notRequired(), // If it's the edit form, password is optional
+    //     .required("Please enter cropType"),
+    //   otherwise: Yup.string().notRequired(), // If it's the edit form, cropType is optional
     // }),
 });
 
 
 const getValidationSchema = (isEdit) => {
   return Yup.object().shape({
-    firstName: Yup.string().required("Please enter first name"),
-    lastName: Yup.string().required("Please enter last name"),
-    email: Yup.string()
-      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email")
-      .required("Please enter email"),
+    name: Yup.string().required("Please enter first name"),
+    phone: Yup.string().required("Please enter last name"),
+    village: Yup.string()
+      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid village")
+      .required("Please enter village"),
     
     // Password validation is only applied if it's an "add" form
-    password: isEdit
-      ? Yup.string().notRequired() // If it's an edit form, password is optional
+    cropType: isEdit
+      ? Yup.string().notRequired() // If it's an edit form, cropType is optional
       : Yup.string()
           .min(8, "Password must be at least 8 characters")
           .matches(/[a-z]/, "Password must contain at least one lowercase letter")
           .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
           .matches(/[0-9]/, "Password must contain at least one number")
           .matches(/[@$!%*?&]/, "Password must contain at least one special character")
-          .required("Please enter password"),
+          .required("Please enter cropType"),
   });
 };
 
@@ -112,7 +112,7 @@ export default function index() {
 	const handleFormSubmit = async (values, resetForm) => {
 		try {
 			if (action === "edit") {
-        delete values.password
+        delete values.cropType
         delete values.isEdit
        
 				setEditloading(true);
@@ -180,10 +180,10 @@ export default function index() {
 	const Form = useFormik({
 		enableReinitialize: true,
 		initialValues: {
-			firstName: editUser.firstName || "",
-			lastName: editUser.lastName || "",
-			email: editUser.email || "",
-      password: editUser.password || "",
+			name: editUser.name || "",
+			phone: editUser.phone || "",
+			village: editUser.village || "",
+      cropType: editUser.cropType || "",
       isEdit
 		},
 		validationSchema: ()=>getValidationSchema(isEdit),
@@ -217,10 +217,10 @@ export default function index() {
 			<table className="table table-bordere">
 				<thead>
 					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Email</th>
-						<th>Password</th>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Village</th>
+						<th>Crop Type</th>
 						<th className="text-center">Action</th>
 					</tr>
 				</thead>
@@ -235,10 +235,10 @@ export default function index() {
 						users?.map((item) => {
 							return (
 								<tr key={item?._id}>
-									<td>{item?.firstName}</td>
-									<td>{item?.lastName}</td>
-									<td>{item?.email}</td>
-									<td>{item?.password ? item?.password : "*******"}</td>
+									<td>{item?.name}</td>
+									<td>{item?.phone}</td>
+									<td>{item?.village}</td>
+									<td>{item?.cropType ? item?.cropType : "*******"}</td>
 									<td className="d-flex align-items-center justify-content-center gap-2">
 										<button onClick={() => handleEdit(item)} className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">
 											<i className="fa fa-edit" />
@@ -285,29 +285,29 @@ export default function index() {
 							<form onSubmit={Form.handleSubmit} className="row" autoComplete={"off"}>
 								{/* First Name Field */}
 								<div className="form-floating mb-0 col-md-6">
-									<input type="text" className="form-control shadow-none border-0 border-bottom" id="firstName" placeholder="First Name" name="firstName" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.firstName} />
-									<label htmlFor="firstName">First Name</label>
-									{Form.touched.firstName && Form.errors.firstName ? <p className="text-danger">{Form.errors.firstName}</p> : null}
+									<input type="text" className="form-control shadow-none border-0 border-bottom" id="name" placeholder="First Name" name="name" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.name} />
+									<label htmlFor="name">First Name</label>
+									{Form.touched.name && Form.errors.name ? <p className="text-danger">{Form.errors.name}</p> : null}
 								</div>
 								{/* Last Name Field */}
 								<div className="form-floating mb-0 col-md-6">
-									<input type="text" className="form-control shadow-none border-0 border-bottom" id="lastName" placeholder="Last Name" name="lastName" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.lastName} />
-									<label htmlFor="lastName">Last Name</label>
-									{Form.touched.lastName && Form.errors.lastName ? <p className="text-danger">{Form.errors.lastName}</p> : null}
+									<input type="text" className="form-control shadow-none border-0 border-bottom" id="phone" placeholder="Last Name" name="phone" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.phone} />
+									<label htmlFor="phone">Last Name</label>
+									{Form.touched.phone && Form.errors.phone ? <p className="text-danger">{Form.errors.phone}</p> : null}
 								</div>
 								{/* Email Field */}
 								<div className="form-floating  mb-0">
-									<input type="email" className="form-control shadow-none border-0 border-bottom" id="email" placeholder="Email" name="email" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.email} />
-									<label htmlFor="email">Email</label>
-									{Form.touched.email && Form.errors.email ? <p className="text-danger">{Form.errors.email}</p> : null}
+									<input type="village" className="form-control shadow-none border-0 border-bottom" id="village" placeholder="Email" name="village" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.village} />
+									<label htmlFor="village">Email</label>
+									{Form.touched.village && Form.errors.village ? <p className="text-danger">{Form.errors.village}</p> : null}
 								</div>
 
 								{/* Password Field */}
 								{action !== "edit" ? (
 									<div className="form-floating mb-3">
-										<input type="password" className="form-control shadow-none border-0 border-bottom" id="password" placeholder="Password" name="password" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.password} />
-										<label htmlFor="password">Password</label>
-										{Form.touched.password && Form.errors.password ? <p className="text-danger">{Form.errors.password}</p> : null}
+										<input type="cropType" className="form-control shadow-none border-0 border-bottom" id="cropType" placeholder="Password" name="cropType" onChange={Form.handleChange} onBlur={Form.handleBlur} value={Form.values.cropType} />
+										<label htmlFor="cropType">Password</label>
+										{Form.touched.cropType && Form.errors.cropType ? <p className="text-danger">{Form.errors.cropType}</p> : null}
 									</div>
 								) : null}
 

@@ -5,6 +5,9 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from 'react-router-dom'
 import { APICALL } from '@/hooks/useApiCall.js'
 
+import { useDispatch } from "react-redux";
+import { login } from '@/redux/userSlice'
+
 const initialSignUpValues = {
 	name: "",
 	phone: "",
@@ -31,6 +34,8 @@ const UserSignUpSchema = Yup.object().shape({
 export default function SignUp({ setToogle }) {
 
 	const [loading, setLoading] = useState(false);
+	
+	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
 	const Formik = useFormik({
@@ -39,14 +44,15 @@ export default function SignUp({ setToogle }) {
 		onSubmit: async (values, { resetForm }) => {
 			try {
 				setLoading(true);
-				const res = await APICALL("post", "/api/auth/register", values)
+				const response = await APICALL("post", "/api/auth/register", values)
+				const res = response?.data;
+				console.log(res)
 				if (res?.massage === "success") {
 					toast.success("Register successfull")
 					resetForm()
 					setLoading(false)
-					setToogle(true)
+					dispatch(login(res?.data))
 					navigate("/scp/dashboard")
-
 				}else{
 					toast.error(res?.error)
 					setLoading(false)
