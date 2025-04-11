@@ -29,7 +29,7 @@ function App() {
       errorElement: <ErrorPage />,
       children: [
         {
-          path: "/dashboard/users",
+          path: "/scp/dashboard",
           element: <UserManagementPage />
         }
       ]

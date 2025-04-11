@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://ecsion-research-labs-assignment.vercel.app/",
+        target: "https://twc-eight.vercel.app/",
         secure: true,
         changeOrigin: true,
       },

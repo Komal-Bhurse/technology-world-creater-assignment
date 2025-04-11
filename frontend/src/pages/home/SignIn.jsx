@@ -43,7 +43,7 @@ export default function SignIn({ setToogle }) {
 					resetForm()
 					setLoading(false)
 					dispatch(login(res?.data))
-					navigate("/dashboard/users")
+					navigate("/scp/dashboard")
 				} else if (res?.massage === "faild") {
 					toast.error(res?.error)
 					setLoading(false)

@@ -28,9 +28,7 @@ const Register = async (req, res) => {
             domain: "twc-eight.vercel.app",
         });
 
-        res.status(201).json({ massage: 'Registered successfully', data: response, error: '' })
-
-        res.redirect('/scp/dashboard');
+        res.status(201).json({ massage: 'success', data: response, error: '' })
        
     } catch (error) {
         res.status(500).json({ message: 'Failed to create user' });
@@ -63,11 +61,7 @@ const Login = async (req, res) => {
             domain: "twc-eight.vercel.app",
         });
 
-        res.status(201).json({ massage: 'Registered successfully', data: response, error: '' })
-
-        res.redirect('/scp/dashboard');
-
-        res.status(200).json({ massage: 'Signin successful', data: user, error: '' })
+        res.status(200).json({ massage: 'success', data: user, error: '' })
 
     } catch (error) {
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { APICALL } from '@/hooks/useApiCall.js'
 
 const initialSignUpValues = {
@@ -31,6 +31,7 @@ const UserSignUpSchema = Yup.object().shape({
 export default function SignUp({ setToogle }) {
 
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate()
 
 	const Formik = useFormik({
 		initialValues: initialSignUpValues,
@@ -40,10 +41,11 @@ export default function SignUp({ setToogle }) {
 				setLoading(true);
 				const res = await APICALL("post", "/api/auth/register", values)
 				if (res?.massage === "success") {
-					toast.success("Sign up successfull")
+					toast.success("Register successfull")
 					resetForm()
 					setLoading(false)
 					setToogle(true)
+					navigate("/scp/dashboard")
 
 				}else{
 					toast.error(res?.error)
