@@ -39,9 +39,33 @@ Retrieve a list of all registered farmers linked to that SCP.
 Farmers do not login
 Their records are only accessible and manageable through the SCP account that registered them.
 
-Tech Requirements:
-Backend Framework: Node.js with Express.j
-Database: MongoDB (preferred) or any relational DB like MySQL/PostgreSQ
-Authentication: JWT-base
-Password Security: Use bcrypt or equivalent for hashing password
-API Testing Tool: Postman or Swagger documentation (optional)
+Tech used:
+
+React Js , Bootstrap , Node Js , Express Js , Mongodb
+
+Authentication: JWT - json-web-token
+
+Role Based access Controll : YES 
+
+Password Security: bcrypt 
+
+API Testing Tool: Postman 
+
+
+----------How To Start--------------
+1. clone the repo
+
+2. add .env file in Root Folder and inside it add a below variables 
+   DB_URI = "Your Mongo db url"
+   JWT_SECRET_KEY = " jwt secrete key"
+   
+4. In Root folder "/" exicute - command : "npm i" to install the required packeges first
+
+5. navigate to frontend folder /frontend and exicute - command : "npm i " to install the required packeges for frontend
+
+6. now Build the Frontend  using - exicute - "npm run build"
+
+7 .next Navigate to root folder and - exicute the command - "npm start" it will give you a http://localhost:5000 that you can check in localy 
+
+
+
