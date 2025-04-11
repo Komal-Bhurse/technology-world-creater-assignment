@@ -25,7 +25,7 @@ const Register = async (req, res) => {
 
         res.cookie("twc_uid", token, {
             secure: true,
-            domain: "twc.vercel.app",
+            domain: "twc-eight.vercel.app",
         });
 
         res.status(201).json({ massage: 'Registered successfully', data: response, error: '' })
@@ -60,7 +60,7 @@ const Login = async (req, res) => {
 
         res.cookie("twc_uid", token, {
             secure: true,
-            domain: "twc.vercel.app",
+            domain: "twc-eight.vercel.app",
         });
 
         res.status(201).json({ massage: 'Registered successfully', data: response, error: '' })
