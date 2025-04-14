@@ -1,41 +1,45 @@
 import express from "express";
-import helmet from 'helmet'
-import path  from "path"
-import cookieParser from 'cookie-parser'
-import  veryfyToken  from "./middlewares/verifyTokenMiddleware.js"
-import  authorizedRole  from "./middlewares/roleMiddleware.js"
+import helmet from 'helmet';
+import path from "path";
+import cookieParser from 'cookie-parser';
+import verifyToken from "./middlewares/verifyTokenMiddleware.js";
+import authorizedRole from "./middlewares/roleMiddleware.js";
 
-import userRoutes from "./routes/user.js"
-import authRoutes from "./routes/auth.js"
+import userRoutes from "./routes/user.js";
+import authRoutes from "./routes/auth.js";
 
 import connectDB from "./connection.js";
 
-const app = express()
+const app = express();
+const PORT = process.env.PORT || 5000;
 
-const PORT = 5000 || process.env.PORT
+// Connect to Database
+connectDB();
 
-connectDB()
-
-app.use(helmet())
-
-app.use(express.urlencoded({extended:false}));
+// middlewares
+app.use(helmet());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.use("/api/auth",authRoutes)
 
-app.use("/api/user",userRoutes)
+// Serve static frontend files
+app.use(express.static(path.resolve("./", 'frontend', 'dist')));
 
-app.get("/",(req,res)=>{
-    app.use(express.static(path.resolve("./",'frontend','dist')))
-    res.sendFile(path.resolve("./",'frontend','dist','index.html'))
-})
+// API routes
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
-app.get("/scp/dashboard",veryfyToken,authorizedRole("SCP"),(req,res)=>{
-        app.use(express.static(path.resolve("./",'frontend','dist')))
-        res.sendFile(path.resolve("./",'frontend','dist','index.html'))
-})
+// Frontend route
+app.get("/", (req, res) => {
+    res.sendFile(path.resolve("./", 'frontend', 'dist', 'index.html'));
+});
 
-app.listen(PORT,()=>{
-    console.log(`Server Running on port ${PORT}`)
-})
+// Protected route - SCP Dashboard
+app.get("/scp/dashboard", verifyToken, authorizedRole("SCP"), (req, res) => {
+    res.sendFile(path.resolve("./", 'frontend', 'dist', 'index.html'));
+});
+
+app.listen(PORT, () => {
+    console.log(` Server Running on port ${PORT}`);
+});

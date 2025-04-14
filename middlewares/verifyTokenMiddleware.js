@@ -1,6 +1,6 @@
 import  { validateToken }  from "../services/auth.js";
 
-const  veryfyToken = async(req, res, next) =>{
+const  verifyToken = async(req, res, next) =>{
   const userUid = req.cookies?.twc_uid;
   if (!userUid) {
     return res.json({
@@ -17,5 +17,5 @@ const  veryfyToken = async(req, res, next) =>{
   req.user = user;
   next();
 }
-export default veryfyToken
+export default verifyToken
   
